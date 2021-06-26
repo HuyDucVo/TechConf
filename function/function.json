@@ -1,0 +1,13 @@
+{
+  "scriptFile": "__init__.py",
+  "bindings": [
+    {
+      "authLevel": "",
+      "type": "serviceBusTrigger",
+      "direction": "in",
+      "name": "msg",
+      "queueName": "notificationqueue",
+      "methods": []
+    }
+  ]
+}
