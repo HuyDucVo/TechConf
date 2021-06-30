@@ -6,6 +6,7 @@ from azure.servicebus import Message
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 import logging
+from azure.servicebus import ServiceBusClient
 
 @app.route('/')
 def index():
@@ -66,7 +67,7 @@ def notification():
         try:
             db.session.add(notification)
             db.session.commit()
-
+            '''
             ##################################################
             ## TODO: Refactor This logic into an Azure Function
             ## Code below will be replaced by a message queue
@@ -85,12 +86,21 @@ def notification():
             #################################################
             ## END of TODO
             #################################################
+            '''
+            #sb_client = ServiceBusClient.from_connection_string(app.config.get('SERVICE_BUS_CONNECTION_STRING'))
+            msg = Message(str(notification.id))
+            #queue_client = sb_client.get_queue(app.config.get('SERVICE_BUS_QUEUE_NAME'))
+            sentResult = queue_client.send(msg) 
+            
 
             return redirect('/Notifications')
+        except Exception as e:
+            logging.error("----- ERROR ----- {}", str(e))
         except :
             logging.error('log unable to save notification')
 
     else:
+        logging.info("---- SUCCESS NOTIFICATION() ----")
         return render_template('notification.html')
 
 
