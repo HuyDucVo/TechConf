@@ -59,13 +59,30 @@ You will need to install the following locally:
 2. Re-deploy the web app to publish changes
 
 ## Monthly Cost Analysis
-Complete a month cost analysis of each Azure resource to give an estimate total cost using the table below:
+- Scenario: TechConf is as https://azuresummit.live/ 
+- Up front: $0
+- Link: 
+   - Azure Pricing Calculator: https://azure.com/e/fb6cccd2dbb449e5a50b2aae50c5ce61 
+   - Theorical website visiting stat: https://www.similarweb.com/website/reinvent.awsevents.com/#overview 
 
 | Azure Resource | Service Tier | Monthly Cost |
 | ------------ | ------------ | ------------ |
-| *Azure Postgres Database* |     |              |
-| *Azure Service Bus*   |         |              |
-| ...                   |         |              |
-
+| *Azure Postgres Database* | Basic Tier | $32.82 |
+| *Azure Service Bus* | Basic tier | $0.05 |
+| *Storage Account* | Queue Storage | $0.05 |
+| *App Service* | Consumption tier | $13.14 |
+| *Azure Function* | Basic Tier | $0.00 |
+| *SendGrid* | Free Tier | $0.00 |
 ## Architecture Explanation
-This is a placeholder section where you can provide an explanation and reasoning for your architecture selection for both the Azure Web App and Azure Function.
+
+<p align="center">
+<img src="/images/diagram.jpg" width="500px">
+</p>
+
+- Intro: This is the barebone and minimal price tag for services as I am trying to use resources frugally with a limited cusomters base.
+- Risk: 
+   - The bandwidth does not allow for a huge number concurrent users.
+   - There is no advance logging mechanism so resiliency is the traded-off
+- Architecure Explaination:
+   - A single web server is good enough for a squential user-access fashion
+   - Moving task consuming too much time to a background job mechanism and jobs-worker queue pattern
